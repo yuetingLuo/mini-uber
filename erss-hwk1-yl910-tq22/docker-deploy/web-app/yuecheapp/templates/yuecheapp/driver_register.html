@@ -1,0 +1,40 @@
+<button onclick="history.back()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+    Back
+</button><br>
+
+<form method="post" style="max-width: 400px; margin: auto;">
+    {% csrf_token %}
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h2>Register as Driver</h2>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="vehicle_type">Vehicle Type:</label>
+        <input type="text" id="vehicle_type" name="vehicle_type" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="license_id">License ID:</label>
+        <input type="text" id="license_id" name="license_id" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="capacity">Capacity:</label>
+        <input type="text" id="capacity" name="capacity" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="sp_info">Special Information:</label>
+        <input type="text" id="sp_info" name="sp_info" style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <input type="submit" value="Register" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+    </div>
+
+</form>
+
+
+<div style="text-align: center;">
+    <p style="color: red;">{{error_msg}}</p>
+</div>

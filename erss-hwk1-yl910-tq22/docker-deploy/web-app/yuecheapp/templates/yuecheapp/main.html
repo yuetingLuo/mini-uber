@@ -1,0 +1,63 @@
+{% if error_message %}
+    <h2>{{ error_message }}</h2>
+    <script>
+        setTimeout(function(){
+           window.location.href = "{% url 'yuecheapp:main' %}";
+        }, 3000);
+        </script>
+{% else %}
+<div style="max-width: 600px; margin: auto; text-align: center;">
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:ride_launch' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Launch a Ride
+            </button>
+        </a>
+    </div>
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:ride_search_sharer' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Search for a Ride
+            </button>
+        </a>
+    </div>
+    {% if user.vehicle_id %}
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:ride_search_driver' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Seeking rides to pick up
+            </button>
+        </a>
+    </div>
+    {% else %}
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:driver_register' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Register as Driver
+            </button>
+        </a>
+    </div>
+    {% endif %}
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:ride_list_user' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                My Ride
+            </button>
+        </a>
+    </div>
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:profile' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                My Profile
+            </button>
+        </a>
+    </div>
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:logout' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Logout
+            </button>
+        </a>
+    </div>
+</div>
+{% endif %}

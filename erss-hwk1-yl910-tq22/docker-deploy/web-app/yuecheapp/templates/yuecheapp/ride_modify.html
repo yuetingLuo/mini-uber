@@ -1,0 +1,32 @@
+<button onclick="history.back()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+    Back
+</button><br>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Modify your ride</h1></legend>
+        {% if ride.owner_id == current_user %}
+            <label for="dest_addr">Destination Address: </label>
+            <input type="text" name="dest_addr" id="dest_addr" value="{{dest_addr}}" required><br>
+            <label for="arrival_date">Arrival Date: </label>
+            <input type="date" name="arrival_date" id="arrival_date" value="{{arrival_date}}" required><br>
+            <label for="arrival_time">Arrival Time: </label>
+            <input type="time" name="arrival_time" id="arrival_time" value="{{arrival_time}}" required><br>
+            <label for="passenger_num">Number of Passengers: </label>
+            <input type="number" name="passenger_num" id="passenger_num" min="1" step="1" value="{{passenger_num}}" required><br>
+            <label for="vehicle_type">Vehicle Type: </label>
+            <input type="text" name="vehicle_type" id="vehicle_type" value="{{vehicle_type}}"><br>
+            <input type="checkbox" name="is_shared" value="True" {% if is_shared %} checked {% endif %}>Allow to share?<br>
+            <label for="sp_info">Special Information: </label>
+            <input type="text" name="sp_info" id="sp_info" value="{{sp_info}}"><br>   
+        {% else %}
+            <label for="passenger_num">Number of Passengers: </label>
+            <input type="number" name="passenger_num" id="passenger_num" min="1" step="1" value="{{passenger_num}}" required><br>
+        {% endif %}
+
+    </fieldset>
+    <input type="submit" value="Modify" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+</form>
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}

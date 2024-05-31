@@ -1,0 +1,31 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<a href="{% url 'yuecheapp:main' %}" class="btn btn-success" style="text-decoration: none; margin-bottom: 20px;">Back</a><br>
+
+<h2>
+{% if type == "user_list" %}
+As a User |  <a href="{% url 'yuecheapp:ride_list_driver'%}">As a Driver</a><br>
+{% endif %}
+{% if type == "driver_list" %}
+<a href="{% url 'yuecheapp:ride_list_user'%}">As a User</a> | As a Driver<br>
+{% endif %}
+</h2>
+
+{% if ride_set.count == 0 %}
+    <h3><br>No rides currently available.</h3>
+{% endif %}
+
+<div class="list-group">
+    
+{% for ride in ride_set %}
+        <form action="{% url 'yuecheapp:ride_detail' ride.id %}" method="post" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ ride.dest_addr }}</h5>
+                <small>{{ ride.arrival_time }}</small>
+            </div>
+            <input type="hidden" id="type" name="type" value="{{ type }}">
+            <button type="submit" class="btn btn-link" style="text-decoration: none; color: blue; padding: 0; background: none; border: none;">Click for more details.</button>
+        </form>
+
+{% endfor %}
+</div>

@@ -1,0 +1,77 @@
+{% if error_message %}
+    <h2>{{ error_message }}</h2>
+    <script>
+        setTimeout(function() {
+            window.history.back();
+        }, 3000);
+    </script>
+{% else %}
+    <button onclick="history.back()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Back
+    </button><br>
+
+    <br><h1>
+    {% if ride.is_shared %}
+        Shared
+    {% endif %}
+    {% if ride.is_confirmed %}
+        Ride with 
+        {% if ride.driver_id.username == current_user.username %}
+            {{ ride.owner_id.username}}
+        {% else %}    
+            {{ ride.driver_id.username }}
+        {% endif %}    
+    {% else %}
+        Ride to Be Confirmed
+    {% endif %}
+    </h1>
+
+    <h3>{{ ride.arrival_time }}</h3>
+
+    <h3>To {{ ride.dest_addr }}<br>
+
+    {{ ride.passenger_cnt }} passengers on the ride now.<br>
+
+    {% if ride.is_confirmed %}
+        Vehicle Info:<br>
+        Type: {{ ride.driver_id.vehicle_id.vehicle_type }}<br>
+        License ID: {{ ride.driver_id.vehicle_id.license_id }}<br>
+        Capacity: {{ ride.driver_id.vehicle_id.capacity }}<br>
+        Vehicle Special Info: {{ ride.driver_id.vehicle_id.sp_info }}<br>
+    {% else %}
+        {% if ride.vehicle_type %}
+        Requring {{ ride.vehicle_type }} to take the order<br>
+        {% endif %}
+    {% endif %}
+
+    {% if ride.sp_info %}
+        Order Special Info: <br>
+        {{ ride.sp_info }}<br>
+    {% endif %}<br>
+    </h3>
+
+    {% if type == "driver_search" %}
+        <a href="{% url 'yuecheapp:ride_confirm' ride.id %}"  style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">Confirm</a>
+    {% endif %}
+    {% if type == "driver_list" %}
+        <a href="{% url 'yuecheapp:ride_complete' ride.id %}"  style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">Complete</a>
+    {% endif %}
+    {% if type == "user_list" and ride.is_confirmed == False %}
+        <a href="{% url 'yuecheapp:ride_quit' ride.id %}"  style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">Quit</a>
+        <a href="{% url 'yuecheapp:ride_modify' ride.id %}" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">Modify</a>
+    {% endif %}
+    {% if type == "sharer_search" %}
+    <form action="{% url 'yuecheapp:ride_join' ride.id %}" method="post">
+        {% csrf_token %}
+        <label for="passenger_num">My Number of Passengers: </label>
+        <input type="number" name="passenger_num" id="passenger_num" value="{{join_num}}"><br>
+        <input type="submit" value="Join" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+    </form>
+    {% endif %}
+    {% if op_error_msg %}
+        <p><strong>{{ op_error_msg }}</strong></p>
+    {% endif %}
+
+{% endif %}
+
+

@@ -1,0 +1,46 @@
+<a href="{% url 'yuecheapp:main' %}" style="text-decoration: none;">
+    <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Back
+    </button>
+</a><br>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Search for a ride to share</h1></legend>
+        <label for="dest_addr">Destination Address: </label>
+        <input type="text" name="dest_addr" id="dest_addr" required><br>
+        <label for="arrival_window">Arrival Time Window: </label><br>
+        <label for="from">From: </label>
+        <input type="date" name="from_date" id="from_date" required>
+        <input type="time" name="from_time" id="from_time" required><br>
+        <label for="to">To: </label>
+        <input type="date" name="to_date" id="to_date" required>
+        <input type="time" name="to_time" id="to_time" required><br>
+        <label for="passenger_num">Number of Passengers: </label>
+        <input type="number" name="passenger_num" id="passenger_num" min="1" step="1" required><br>
+    </fieldset>
+    <input type="submit" value="Search">
+</form>
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+{% if request.method == "POST" %}
+    {% if ride_set %}
+        {% for ride in ride_set.all %}
+            Ride {{ forloop.counter }}<br>
+            Destination Address: {{ ride.dest_addr }}<br>
+            Arrival Time: {{ ride.arrival_time }}<br>
+            Current Number of Passengers: {{ ride.passenger_cnt }}<br>
+
+            <form action="{% url 'yuecheapp:ride_detail' ride.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="type" name="type" value="sharer_search">
+                <input type="hidden" id="join_num" name="join_num" value="{{join_num}}">
+                <input type="submit" value="Details" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+            </form>
+        {% endfor %}
+    {% else %}
+        <span>No rides founded.</span>
+    {% endif %}
+{% endif %}
+

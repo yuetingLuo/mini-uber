@@ -1,0 +1,46 @@
+<a href="{% url 'yuecheapp:main' %}" style="text-decoration: none;">
+    <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Back
+    </button>
+</a><br>
+<div style="max-width: 600px; margin: auto; text-align: center;">
+    <h1 style="font-size: 24px; color: #333; margin-bottom: 10px;">Welcome, {{ user.username }}!</h1>
+    <p>Email: {{ user.email }}</p>
+
+    <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+        <h2 style="font-size: 20px; color: #4CAF50; margin-bottom: 15px;">Driver Status</h2>
+        {% if user.vehicle_id %}
+            <!-- vehicle_id exists -->
+            <p>Vehicle type: {{ vehicle.vehicle_type }}</p>
+            <p>License ID: {{ vehicle.license_id }}</p>
+            <p>Capacity: {{ vehicle.capacity }}</p>
+            <p>Special info: {{ vehicle.sp_info }}</p>
+        {% else %}
+            <!-- no vehicle -->
+            <p style="font-weight: bold; color: #FF5722;">You are not a DRIVER.</p>
+            <div style="margin-top: 10px;">
+                <a href="{% url 'yuecheapp:driver_register' %}" style="text-decoration: none;">
+                    <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                        Register as Driver
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:profile_modify' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Modify Profile
+            </button>
+        </a>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="{% url 'yuecheapp:logout' %}" style="text-decoration: none;">
+            <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Logout
+            </button>
+        </a>
+    </div>
+</div>
